@@ -2,7 +2,9 @@ package com.example.memorygame
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.GridLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -18,5 +20,9 @@ class MainActivity : AppCompatActivity() {
         tvNumPairs = findViewById(R.id.tvNumPairs)
 
         //Setting up the recycler view
+        rvBoard.adapter = MemoryBoardAdapter(this, 8)
+        rvBoard.setHasFixedSize(true)//optimization step
+        rvBoard.layoutManager = GridLayoutManager(this,2)
+
     }
 }
