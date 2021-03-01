@@ -9,9 +9,13 @@ import android.widget.ImageButton
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.memorygame.models.BoardSize
+import com.example.memorygame.models.MemoryCard
 import kotlin.math.min
 
-class MemoryBoardAdapter(private val context: Context, private val boardSize: BoardSize):
+class MemoryBoardAdapter(private val context: Context,
+                         private val boardSize: BoardSize,
+                         private val cards: List<MemoryCard>
+): //randomizedImages
     RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
 
     companion object{        //similar to static in java// it can be accessed by the containing class anywhere
@@ -24,6 +28,11 @@ class MemoryBoardAdapter(private val context: Context, private val boardSize: Bo
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
         fun bind(position: Int) {
+
+            imageButton.setImageResource(
+            if(cards[position].isFaceUp) cards[position].identifier
+            else R.drawable.ic_launcher_background)
+
             imageButton.setOnClickListener{
                 Log.i(TAG,"Clicked on  $position")
             }
