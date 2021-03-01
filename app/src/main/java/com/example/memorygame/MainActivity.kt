@@ -2,16 +2,17 @@ package com.example.memorygame
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.GridLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.memorygame.models.BoardSize
 
 class MainActivity : AppCompatActivity() {
     private lateinit var rvBoard: RecyclerView
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs: TextView
 
+    private var boardSize: BoardSize = BoardSize.HARD
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,9 +21,9 @@ class MainActivity : AppCompatActivity() {
         tvNumPairs = findViewById(R.id.tvNumPairs)
 
         //Setting up the recycler view
-        rvBoard.adapter = MemoryBoardAdapter(this, 8)
+        rvBoard.adapter = MemoryBoardAdapter(this, boardSize)
         rvBoard.setHasFixedSize(true)//optimization step
-        rvBoard.layoutManager = GridLayoutManager(this,2)
+        rvBoard.layoutManager = GridLayoutManager(this,boardSize.getWidth())
 
     }
 }
