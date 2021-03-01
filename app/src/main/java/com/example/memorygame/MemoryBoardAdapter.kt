@@ -1,23 +1,36 @@
 package com.example.memorygame
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.min
 
 class MemoryBoardAdapter(private val context: Context,private val  numPieces: Int):
     RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
-    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        fun bind(position: Int) {
-            //No-op
-        }
-    }
 
     companion object{        //similar to static in java// it can be accessed by the containing class anywhere
         private const val MARGIN_SIZE = 15
+        private const val TAG = "MemoryBoardAdapter"
+    }
+
+
+    //Inner Class here
+    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+        private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
+        fun bind(position: Int) {
+            imageButton.setOnClickListener{
+                Log.i(TAG,"Clicked on  $position")
+            }
+        }
+
+//        fun fuck() {
+//            Log.i(TAG,"Clicked on position")
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,6 +49,7 @@ class MemoryBoardAdapter(private val context: Context,private val  numPieces: In
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
+//        holder.fuck()
     }
 
 
