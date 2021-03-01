@@ -17,7 +17,7 @@ class MemoryBoardAdapter(private val context: Context,private val  numPieces: In
     }
 
     companion object{        //similar to static in java// it can be accessed by the containing class anywhere
-        private const val MARGIN_SIZE = 10
+        private const val MARGIN_SIZE = 15
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
