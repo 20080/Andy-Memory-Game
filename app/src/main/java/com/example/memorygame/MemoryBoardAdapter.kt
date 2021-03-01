@@ -33,7 +33,7 @@ class MemoryBoardAdapter(private val context: Context,
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
         fun bind(position: Int) {
-
+            //the logic of showing the face or background
             imageButton.setImageResource(
             if(cards[position].isFaceUp) cards[position].identifier
             else R.drawable.ic_launcher_background)

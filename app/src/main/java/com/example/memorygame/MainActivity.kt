@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
     }
 
+    private lateinit var adapter: MemoryBoardAdapter
+    private lateinit var memGame: MemGame
     private lateinit var rvBoard: RecyclerView
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs: TextView
@@ -36,17 +38,29 @@ class MainActivity : AppCompatActivity() {
 //        val memoryCards = randomizedImages.map { MemoryCard(it) }
 
 
-        val memGame = MemGame(boardSize)
+         memGame = MemGame(boardSize)
         //Setting up the recycler view
 //        rvBoard.adapter = MemoryBoardAdapter(this, boardSize, randomizedImages)
-        rvBoard.adapter = MemoryBoardAdapter(this, boardSize, memGame.cards,object : MemoryBoardAdapter.CardClickListener{
+        //can use like this but using as property is fancy i guess
+//            rvBoard.adapter =  MemoryBoardAdapter(this, boardSize, memGame.cards,object : MemoryBoardAdapter.CardClickListener
+        adapter =  MemoryBoardAdapter(this, boardSize, memGame.cards,object : MemoryBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
-                Log.i(TAG,"Clicked here the position is $position")
+//                Log.i(TAG,"Clicked here the position is $position")
+                  updateGameWithFlip(position)
             }
 
+
         })
-        rvBoard.setHasFixedSize(true)//optimization step
+        rvBoard.adapter = adapter
+            rvBoard.setHasFixedSize(true)//optimization step
         rvBoard.layoutManager = GridLayoutManager(this,boardSize.getWidth())
 
+    }
+
+    private fun updateGameWithFlip(position: Int) {
+        memGame.flipCard(position)
+        //related to line 44 for now the memoryBoardAdapter thingy
+//        rvBoard.adapter!!.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 }
