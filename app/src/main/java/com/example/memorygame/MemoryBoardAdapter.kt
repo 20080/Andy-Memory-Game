@@ -8,7 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MemoryBoardAdapter(private val context: Context,private val  numPieces: Int):
     RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
-    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
+    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+        fun bind(position: Int) {
+            //No-op
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val view = LayoutInflater.from(context).inflate(R.layout.memory_card,parent,false)
@@ -16,7 +20,7 @@ class MemoryBoardAdapter(private val context: Context,private val  numPieces: In
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        holder.bind(position)
     }
 
 
