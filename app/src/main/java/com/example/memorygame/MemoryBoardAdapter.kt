@@ -14,13 +14,18 @@ import kotlin.math.min
 
 class MemoryBoardAdapter(private val context: Context,
                          private val boardSize: BoardSize,
-                         private val cards: List<MemoryCard>
+                         private val cards: List<MemoryCard>,
+                         private val cardClickListener: CardClickListener
 ): //randomizedImages
     RecyclerView.Adapter<MemoryBoardAdapter.ViewHolder>() {
 
     companion object{        //similar to static in java// it can be accessed by the containing class anywhere
         private const val MARGIN_SIZE = 12
         private const val TAG = "MemoryBoardAdapter"
+    }
+
+    interface CardClickListener{
+        fun onCardClicked(position: Int)
     }
 
 
@@ -35,6 +40,7 @@ class MemoryBoardAdapter(private val context: Context,
 
             imageButton.setOnClickListener{
                 Log.i(TAG,"Clicked on  $position")
+                cardClickListener.onCardClicked(position)
             }
         }
 
