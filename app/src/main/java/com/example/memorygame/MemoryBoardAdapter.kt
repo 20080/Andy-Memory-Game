@@ -16,16 +16,21 @@ class MemoryBoardAdapter(private val context: Context,private val  numPieces: In
         }
     }
 
+    companion object{        //similar to static in java// it can be accessed by the containing class anywhere
+        private const val MARGIN_SIZE = 10
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val cardWidth = parent.width / 2
-        val cardHeight = parent.height / 4
+        val cardWidth = parent.width / 2 - (MARGIN_SIZE*2)
+        val cardHeight = parent.height / 4 - (MARGIN_SIZE*2)
         val cardSideLength = min(cardWidth,cardHeight)
         val view = LayoutInflater.from(context).inflate(R.layout.memory_card,parent,false)
         //Ripping view i.e. cardView Params form its layout file using some methods
-        val layoutPrams = view.findViewById<CardView>(R.id.cardView).layoutParams
+        val layoutPrams = view.findViewById<CardView>(R.id.cardView).layoutParams as ViewGroup.MarginLayoutParams
         //Setting height and width
         layoutPrams.height = cardSideLength
         layoutPrams.width = cardSideLength
+        layoutPrams.setMargins(MARGIN_SIZE, MARGIN_SIZE, MARGIN_SIZE, MARGIN_SIZE)
         return ViewHolder(view)
     }
 
