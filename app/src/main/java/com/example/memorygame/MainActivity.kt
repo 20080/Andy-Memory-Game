@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -61,9 +62,22 @@ class MainActivity : AppCompatActivity() {
                 else {
                     setupBoard()
                 }
+                return true
+            }
+            R.id.mi_new_size->{
+                showNewSizeDialog()
+                return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showNewSizeDialog() {
+        //Inflating a view soo that we can pass it to the showAlertDialog function as view parameter to show options
+        val boardSizeView = LayoutInflater.from(this).inflate(R.layout.dialog_board_size,null)
+        showAlertDialog("Choose new size",null,View.OnClickListener {
+            //set new value for the grid of board
+        })
     }
 
     private fun showAlertDialog(title:String,view: View?,positiveClickListener: View.OnClickListener) {
@@ -77,6 +91,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBoard() {
+
+        when(boardSize){
+            BoardSize.EASY -> {
+                tvNumPairs.text = "Pairs: 0/4"
+                tvNumMoves.text = "Easy: 4x2"
+            }
+            BoardSize.MEDIUM -> {
+                tvNumPairs.text = "Pairs: 0/9"
+                tvNumMoves.text = "Medium: 6x3"
+            }
+            BoardSize.HARD -> {
+                tvNumPairs.text = "Pairs: 0/12"
+                tvNumMoves.text = "Hard: 6x4"
+            }
+        }
+
         tvNumPairs.setTextColor(ContextCompat.getColor(this,R.color.color_progress_none))
 
 //        val chosenImages=DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
