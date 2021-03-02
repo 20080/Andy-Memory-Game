@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,17 +48,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //reset the game or setup the game again
+//        setupBoard()
+        //the game alert that you might lose your progress mortal
         when(item.itemId){
             R.id.mi_refresh ->{
-
-                //the game alert that you might lose your progress mortal
-
-
-                //reset the game or setup the game again
-                setupBoard()
+                if(memGame.getNumMoves()>0&&!memGame.haveWonGame()){
+                    showAlertDialog("Quit your current game?",null, View.OnClickListener {
+                        setupBoard()
+                    })
+                }
+                else {
+                    setupBoard()
+                }
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showAlertDialog(title:String,view: View?,positiveClickListener: View.OnClickListener) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setView(view)
+            .setNegativeButton("Cancel",null)
+            .setPositiveButton("OK"){_,_->
+                positiveClickListener.onClick(null)
+            }.show()
     }
 
     private fun setupBoard() {
