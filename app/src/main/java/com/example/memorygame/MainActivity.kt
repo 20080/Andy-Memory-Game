@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +19,7 @@ import com.example.memorygame.models.BoardSize
 import com.example.memorygame.models.MemGame
 import com.example.memorygame.models.MemoryCard
 import com.example.memorygame.utilsvec.DEFAULT_ICONS
+import kotlinx.android.synthetic.main.dialog_board_size.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -75,8 +77,22 @@ class MainActivity : AppCompatActivity() {
     private fun showNewSizeDialog() {
         //Inflating a view soo that we can pass it to the showAlertDialog function as view parameter to show options
         val boardSizeView = LayoutInflater.from(this).inflate(R.layout.dialog_board_size,null)
-        showAlertDialog("Choose new size",null,View.OnClickListener {
+        val radioGroupSize = boardSizeView.findViewById<RadioGroup>(R.id.radioGroup)
+        when(boardSize){
+            BoardSize.EASY -> radioGroupSize.check(R.id.rbEasy)
+            BoardSize.MEDIUM -> radioGroupSize.check(R.id.rbMedium)
+            BoardSize.HARD -> radioGroupSize.check(R.id.rbHard)
+        }
+        showAlertDialog("Choose new size",boardSizeView,View.OnClickListener {
             //set new value for the grid of board
+            boardSize = when(radioGroupSize.checkedRadioButtonId){
+                R.id.rbEasy->BoardSize.EASY
+                R.id.rbMedium->BoardSize.MEDIUM
+
+                else ->BoardSize.HARD
+
+            }
+            setupBoard()
         })
     }
 
