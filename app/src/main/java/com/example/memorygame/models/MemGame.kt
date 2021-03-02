@@ -5,7 +5,7 @@ import com.example.memorygame.utilsvec.DEFAULT_ICONS
 class MemGame(private val boardSize: BoardSize) {
     val cards: List<MemoryCard>
     var numPairsFound = 0
-
+    private var numCardFlips = 0
     private var indOfSingleSelectedCard: Int ? = null
     init {
         val chosenImages= DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
@@ -16,6 +16,7 @@ class MemGame(private val boardSize: BoardSize) {
 
 
     fun flipCard(position: Int): Boolean {
+        numCardFlips++
         val card = cards[position]
         //3 cases are there
         //1 card flipped over => flip the card check if there is a match? if yes the don't flip back the cards on case 2
@@ -53,5 +54,17 @@ class MemGame(private val boardSize: BoardSize) {
             if(!card.isMatched)
             card.isFaceUp = false
         }
+    }
+
+    fun haveWonGame(): Boolean {
+        return numPairsFound == boardSize.getNumPairs()
+    }
+
+    fun isCardFaceUp(position: Int): Boolean {
+        return cards[position].isFaceUp
+    }
+
+    fun getNumMoves(): Int {
+        return numCardFlips/2
     }
 }
