@@ -1,6 +1,7 @@
 package com.example.memorygame
 
 import android.animation.ArgbEvaluator
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,12 +20,14 @@ import com.example.memorygame.models.BoardSize
 import com.example.memorygame.models.MemGame
 import com.example.memorygame.models.MemoryCard
 import com.example.memorygame.utilsvec.DEFAULT_ICONS
+import com.example.memorygame.utilsvec.EXTRA_BOARD_SIZE
 import kotlinx.android.synthetic.main.dialog_board_size.*
 
 class MainActivity : AppCompatActivity() {
 
     companion object{
         private const val TAG = "MainActivity"
+        private const val CREATE_REQUEST_CODE = 1024
     }
 
     private lateinit var adapter: MemoryBoardAdapter
@@ -91,8 +94,10 @@ class MainActivity : AppCompatActivity() {
                 else ->BoardSize.HARD
 
             }
-
             //navigate to new activity
+            val intent = Intent(this,CreateActivity::class.java)
+            intent.putExtra(EXTRA_BOARD_SIZE,desiredBoardSize)
+            startActivityForResult(intent, CREATE_REQUEST_CODE)
         })
     }
 
